@@ -38,8 +38,8 @@ from typing import Tuple, Union, Optional, Any
 from abc import ABC, abstractmethod
 
 
-class [AlgorithmName]:
-    \"\"\"
+class AlgorithmName:
+    """
     [Algorithm Name] Model
     
     [Detailed explanation of the algorithm]
@@ -50,15 +50,15 @@ class [AlgorithmName]:
         fitted_ (bool): Whether the model has been fitted
     
     Example:
-        >>> from [module] import [AlgorithmName]
-        >>> model = [AlgorithmName](param1=0.1)
+        >>> from [module] import AlgorithmName
+        >>> model = AlgorithmName(param1=0.1)
         >>> model.fit(X_train, y_train)
         >>> predictions = model.predict(X_test)
-    \"\"\"
+    """
     
     def __init__(self, param1: float = 0.1, param2: int = 100, random_state: Optional[int] = None):
-        \"\"\"
-        Initialize [AlgorithmName]
+        """
+        Initialize AlgorithmName
         
         Args:
             param1 (float): [Description]. Default: 0.1
@@ -67,7 +67,7 @@ class [AlgorithmName]:
         
         Raises:
             ValueError: If parameters are invalid
-        \"\"\"
+        """
         if not isinstance(param1, (int, float)) or param1 <= 0:
             raise ValueError(f"param1 must be positive, got {param1}")
         
@@ -77,8 +77,8 @@ class [AlgorithmName]:
         self.fitted_ = False
         self.params_ = {}  # Store fitted parameters
     
-    def fit(self, X: np.ndarray, y: np.ndarray = None, **kwargs) -> '[AlgorithmName]':
-        \"\"\"
+    def fit(self, X: np.ndarray, y: np.ndarray = None, **kwargs) -> 'AlgorithmName':
+        """
         Fit the model to training data
         
         Args:
@@ -90,7 +90,7 @@ class [AlgorithmName]:
             **kwargs: Additional parameters
         
         Returns:
-            [AlgorithmName]: Fitted model (self)
+            AlgorithmName: Fitted model (self)
         
         Raises:
             ValueError: If X is empty or has invalid shape
@@ -98,7 +98,7 @@ class [AlgorithmName]:
         Notes:
             - X should be 2D array
             - If X has NaN or Inf values, they should be handled beforehand
-        \"\"\"
+        """
         # Validate input
         self._validate_input(X)
         
@@ -112,7 +112,7 @@ class [AlgorithmName]:
         return self
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        \"\"\"
+        """
         Make predictions on new data
         
         Args:
@@ -131,7 +131,7 @@ class [AlgorithmName]:
             >>> predictions = model.predict(X_test)
             >>> print(predictions.shape)
             (n_samples,)
-        \"\"\"
+        """
         if not self.fitted_:
             raise RuntimeError("Model must be fitted before prediction. Call fit() first.")
         
@@ -143,7 +143,7 @@ class [AlgorithmName]:
         return np.array([])  # Replace with actual predictions
     
     def score(self, X: np.ndarray, y: np.ndarray) -> float:
-        \"\"\"
+        """
         Calculate model performance score
         
         Args:
@@ -157,7 +157,7 @@ class [AlgorithmName]:
             - For classification: typically accuracy
             - For regression: typically R² score
             - For clustering: typically silhouette score
-        \"\"\"
+        """
         predictions = self.predict(X)
         
         # TODO: Calculate and return appropriate metric
@@ -167,28 +167,28 @@ class [AlgorithmName]:
         return 0.0
     
     def get_params(self) -> dict:
-        \"\"\"
+        """
         Get parameters of the model
         
         Returns:
             dict: Model parameters
-        \"\"\"
+        """
         return {
             'param1': self.param1,
             'param2': self.param2,
             'random_state': self.random_state
         }
     
-    def set_params(self, **params) -> '[AlgorithmName]':
-        \"\"\"
+    def set_params(self, **params) -> 'AlgorithmName':
+        """
         Set model parameters
         
         Args:
             **params: Parameters to set
         
         Returns:
-            [AlgorithmName]: Self
-        \"\"\"
+            AlgorithmName: Self
+        """
         valid_params = self.get_params().keys()
         
         for key, value in params.items():
@@ -203,7 +203,7 @@ class [AlgorithmName]:
     # ========================================================================
     
     def _validate_input(self, X: np.ndarray) -> None:
-        \"\"\"Validate input X\"\"\"
+        """Validate input X"""
         if not isinstance(X, np.ndarray):
             raise ValueError(f"X must be numpy array, got {type(X)}")
         
@@ -217,7 +217,7 @@ class [AlgorithmName]:
             raise ValueError("X contains NaN or Inf values")
     
     def _validate_target(self, y: np.ndarray, n_samples: int) -> None:
-        \"\"\"Validate target y\"\"\"
+        """Validate target y"""
         if not isinstance(y, np.ndarray):
             raise ValueError(f"y must be numpy array, got {type(y)}")
         
@@ -225,7 +225,7 @@ class [AlgorithmName]:
             raise ValueError(f"y length ({y.shape[0]}) != X samples ({n_samples})")
     
     def __repr__(self) -> str:
-        \"\"\"String representation of model\"\"\"
+        """String representation of model"""
         params = self.get_params()
         params_str = ', '.join([f'{k}={v}' for k, v in params.items()])
         return f"{self.__class__.__name__}({params_str})"
@@ -236,7 +236,7 @@ class [AlgorithmName]:
 # ============================================================================
 
 def create_sample_data():
-    \"\"\"Create sample data for testing\"\"\"
+    """Create sample data for testing"""
     np.random.seed(42)
     
     # For classification
@@ -247,7 +247,7 @@ def create_sample_data():
 
 
 def example_usage():
-    \"\"\"Example of using [AlgorithmName]\"\"\"
+    """Example of using AlgorithmName"""
     
     # Load data
     X, y = create_sample_data()
@@ -260,36 +260,36 @@ def example_usage():
     y_train, y_test = y[:split_idx], y[split_idx:]
     
     # Create and fit model
-    model = [AlgorithmName](param1=0.1, param2=100)
-    print(f"\\nInitial model: {model}")
+    model = AlgorithmName(param1=0.1, param2=100)
+    print(f"\nInitial model: {model}")
     
     model.fit(X_train, y_train)
     print(f"Model fitted: {model.fitted_}")
     
     # Make predictions
     predictions = model.predict(X_test)
-    print(f"\\nPredictions shape: {predictions.shape}")
+    print(f"\nPredictions shape: {predictions.shape}")
     print(f"Sample predictions: {predictions[:5]}")
     
     # Evaluate
     score = model.score(X_test, y_test)
-    print(f"\\nModel score: {score:.4f}")
+    print(f"\nModel score: {score:.4f}")
     
     # Get parameters
     params = model.get_params()
-    print(f"\\nModel parameters: {params}")
+    print(f"\nModel parameters: {params}")
 
 
-if __name__ == \"__main__\":
-    print(\"=\"*60)
-    print(\"[ALGORITHM_NAME] - Example Usage\")
-    print(\"=\"*60)
+if __name__ == "__main__":
+    print("="*60)
+    print("[ALGORITHM_NAME] - Example Usage")
+    print("="*60)
     
     try:
         example_usage()
     except Exception as e:
-        print(f\"Error: {e}\")
+        print(f"Error: {e}")
     
-    print(\"\\n\" + \"=\"*60)
-    print(\"✅ Example completed!\")
-    print(\"=\"*60)
+    print("\n" + "="*60)
+    print("✅ Example completed!")
+    print("="*60)
