@@ -188,12 +188,172 @@ Mỗi file nên bao gồm:
 
 ## 🤝 Quy Tắc Đóng Góp
 
-Khi thêm thuật toán mới:
-1. Tạo file trong thư mục phù hợp
-2. Viết docstring chi tiết
-3. Thêm examples
-4. Cập nhật README.md
-5. Viết tests (optional)
+Khi thêm thuật toán mới, vui lòng tuân theo các bước sau:
+
+### 1️⃣ Tạo File Trong Thư Mục Phù Hợp
+
+- **Xác định loại học**: Chọn thư mục lớp nhất (supervised, unsupervised, reinforcement_learning, deep_learning)
+- **Chọn danh mục**: Chọn thư mục con phù hợp
+  - Classification: Phân loại dữ liệu
+  - Regression: Dự đoán giá trị liên tục
+  - Clustering: Phân cụm dữ liệu
+  - Dimensionality Reduction: Giảm chiều dữ liệu
+- **Đặt tên file**: Sử dụng `snake_case` theo naming convention (vd: `linear_regression.py`, `random_forest.py`)
+- **Ví dụ**: File classification model → `supervised/classification/your_algorithm.py`
+
+### 2️⃣ Viết Docstring Chi Tiết
+
+Mỗi file nên bao gồm:
+- **Module docstring** (đầu file):
+  - Tên module
+  - Mô tả tổng quát thuật toán
+  - Tên tác giả (Author)
+  - Ngày tạo (Date)
+  
+- **Class/Function docstring**:
+  - Mô tả chi tiết thuật toán
+  - Công thức toán học (nếu có)
+  - Parameters: kiểu dữ liệu, mô tả
+  - Returns: kiểu dữ liệu, mô tả
+  - Ưu điểm và nhược điểm
+  
+- **Method docstring**:
+  - Mô tả ngắn gọn công dụng
+  - Parameters
+  - Returns
+
+**Ví dụ**:
+```python
+"""
+Module: Linear Regression
+Description: Thuật toán hồi quy tuyến tính - dự đoán giá trị liên tục
+Author: Your Name
+Date: 2026-03-30
+"""
+
+class LinearRegression:
+    """
+    Linear Regression Model - Mô hình hồi quy tuyến tính
+    
+    Sử dụng phương pháp Ordinary Least Squares (OLS) để tìm ra
+    đường thẳng phù hợp nhất cho dữ liệu.
+    
+    Công thức: y = w*x + b
+    
+    Ưu điểm:
+    - Đơn giản, dễ hiểu
+    - Tính toán nhanh
+    - Kết quả dễ diễn giải
+    
+    Nhược điểm:
+    - Chỉ phù hợp với mối quan hệ tuyến tính
+    - Nhạy cảm với outliers
+    """
+```
+
+### 3️⃣ Thêm Examples
+
+- **Ví dụ trong file chính**: Thêm phần `if __name__ == "__main__":` ở cuối file
+  - Tạo dữ liệu mẫu hoặc load dữ liệu
+  - Khởi tạo model
+  - Huấn luyện (`fit()`)
+  - Dự đoán (`predict()`)
+  - Đánh giá (`score()`)
+
+- **Ví dụ trong thư mục examples/**: Nếu thuật toán phức tạp
+  - Tạo file ví dụ riêng (vd: `supervised_example.py`)
+  - Bao gồm cả data loading và visualization
+  
+**Ví dụ trong file**:
+```python
+if __name__ == "__main__":
+    # Tạo dữ liệu mẫu
+    X = np.array([[1, 1], [1, 2], [2, 2], [2, 3]])
+    y = np.array([2, 3, 4, 5])
+    
+    # Khởi tạo và huấn luyện
+    model = LinearRegression(learning_rate=0.01)
+    model.fit(X, y)
+    
+    # Dự đoán
+    predictions = model.predict(X)
+    print(f"Dự đoán: {predictions}")
+    
+    # Đánh giá
+    accuracy = model.score(X, y)
+    print(f"Chính xác: {accuracy}")
+```
+
+### 4️⃣ Cập Nhật README.md
+
+- **Thêm vào cấu trúc thư mục** (phần 📁):
+  - Thêm tên file vào vị trí phù hợp trong cây thư mục
+  
+- **Cập nhật danh sách thuật toán** (nếu có):
+  - Thêm tên vào danh sách trong phần mô tả loại học
+
+- **Cập nhật Last Updated**: Thay đổi ngày tháng ở cuối README
+
+**Ví dụ**:
+```
+supervised/
+  classification/
+    ├── logistic_regression.py
+    ├── decision_tree.py
+    ├── random_forest.py
+    ├── svm.py
+    ├── knn.py
+    └── naive_bayes.py
+```
+
+### 5️⃣ Viết Tests (Tùy Chọn Nhưng Được Khuyến Khích)
+
+- **Tạo file test** trong thư mục `tests/` với tên `test_*.py`
+- **Test các trường hợp**:
+  - Khởi tạo model
+  - Fit với dữ liệu hợp lệ
+  - Predict với dữ liệu mới
+  - Edge cases (dữ liệu trống, kích thước sai, etc.)
+  
+- **Sử dụng pytest hoặc unittest**:
+```python
+import pytest
+from supervised.classification.your_algorithm import YourAlgorithm
+
+def test_init():
+    model = YourAlgorithm()
+    assert model is not None
+
+def test_fit():
+    X = [[1, 2], [3, 4]]
+    y = [0, 1]
+    model = YourAlgorithm()
+    model.fit(X, y)
+    assert model.weights is not None
+
+def test_predict():
+    X = [[1, 2], [3, 4]]
+    y = [0, 1]
+    model = YourAlgorithm()
+    model.fit(X, y)
+    predictions = model.predict(X)
+    assert len(predictions) == 2
+```
+
+### 📋 Checklist Trước Khi Commit
+
+- [ ] File đặt tên đúng theo naming convention
+- [ ] Docstring đầy đủ và chi tiết
+- [ ] Có ví dụ sử dụng cơ bản
+- [ ] Cập nhật README.md
+- [ ] Type hints thích hợp
+- [ ] Code có comment rõ ràng
+- [ ] Tests viết (nếu khả năng)
+- [ ] Không có lỗi syntax (chạy `python -m py_compile file.py`)
+
+---
+
+**Lưu ý**: Kiểm tra kỹ code trước khi đóng góp để đảm bảo chất lượng!
 
 ---
 
